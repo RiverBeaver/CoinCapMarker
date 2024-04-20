@@ -1,0 +1,38 @@
+<coin-search [allCoins]="allCoins" (onChangedDesiredСoin)="coinsChange($event)"></coin-search>
+
+<div>Show rows <select name="rows" id="rows" (change)="changeTableSize($event)">
+    <option value="100">100</option>
+    <option value="50" selected>50</option>
+    <option value="20">20</option>
+</select></div>
+<table>
+    <thead>
+        <tr>
+            <th (click)="sort(0)">#</th>
+            <th>Name</th>
+            <th (click)="sort(1)">Price</th>
+            <th (click)="sort(2)">24h %</th>
+            <th (click)="sort(3)">Market Cap</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let coin of coins | paginate:{itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i index" (click)="goHome(coin.id)">
+            <td>{{coin.rank}}</td>
+            <td>
+                <img src="{{coin.logo}}" alt="">
+                <span class="name">{{coin.name}}</span>
+                <span class="symbol">{{coin.symbol}}</span>
+            </td>
+            <td>{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</td>
+            <td>{{coin.changePercent24Hr | number: '.2-2'}} %</td>
+            <td>{{coin.marketCapUsd | currency: 'CAD' : 'symbol-narrow' : '4.2-2'}}</td>
+            <td><button>Добавить</button></td>
+        </tr>
+    </tbody>
+</table>
+<div>
+    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+  
+    </pagination-controls>
+  </div>

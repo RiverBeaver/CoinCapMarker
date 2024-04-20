@@ -1,0 +1,23 @@
+<main>
+    <div class="info" *ngIf="coin">
+        <div>
+            <img src="{{coin.logo}}" alt="">
+            <span class="name">{{coin.name}}</span> 
+            <span class="symbol">{{coin.symbol}}</span> 
+            <span>{{coin.rank}}</span> 
+        </div>
+        <div class="price">
+            <div>{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
+            <div>{{coin.changePercent24Hr | number: '.2-2'}} % (1d)</div>
+            <div>{{coin.marketCapUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
+        </div>
+        <div class="supply">
+            <div>Supply: {{coin.supply | number: '.2-2'}} {{coin.symbol}}</div>
+            <div *ngIf="coin.maxSupply; else infinity">Max. supply: {{coin.maxSupply | number: '.2-2'}} {{coin.symbol}}</div>
+            <ng-template #infinity>
+                <div>Max. supply: &#8734;</div>
+            </ng-template>
+        </div>
+        <div></div>
+    </div>
+</main>
