@@ -1,0 +1,8 @@
+<header>
+    <div class="top3">
+        <div *ngFor="let coin of topCoins" (click)="moreDetailed(coin.id)">
+            <img src="{{coin.logo}}" alt="">
+            <span>{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</span>
+        </div>
+    </div>
+</header>

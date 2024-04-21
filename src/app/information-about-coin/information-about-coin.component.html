@@ -1,23 +1,31 @@
-<main>
-    <div class="info" *ngIf="coin">
-        <div>
-            <img src="{{coin.logo}}" alt="">
-            <span class="name">{{coin.name}}</span> 
-            <span class="symbol">{{coin.symbol}}</span> 
-            <span>{{coin.rank}}</span> 
+<div *ngIf="error; else information">
+    <error [error]="error"></error>
+</div>
+<ng-template #information>
+    <main>
+        <button><a href="">Go back</a></button>
+        <div class="info" *ngIf="coin">
+            <div>
+                <img src="{{coin.logo}}" alt="">
+                <span class="name">{{coin.name}}</span> 
+                <span class="symbol">{{coin.symbol}}</span> 
+                <span>{{coin.rank}}</span>
+                <button>Add</button>
+            </div>
+            <div class="price">
+                <div>{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
+                <div>{{coin.changePercent24Hr | number: '.2-2'}} % (1d)</div>
+                <div>Market cap: {{coin.marketCapUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
+            </div>
+            <div class="supply">
+                <div>Supply: {{coin.supply | number: '.2-2'}} {{coin.symbol}}</div>
+                <div *ngIf="coin.maxSupply; else infinity">Max. supply: {{coin.maxSupply | number: '.2-2'}} {{coin.symbol}}</div>
+                <ng-template #infinity>
+                    <div>Max. supply: &#8734;</div>
+                </ng-template>
+            </div>
+            <div></div>
         </div>
-        <div class="price">
-            <div>{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
-            <div>{{coin.changePercent24Hr | number: '.2-2'}} % (1d)</div>
-            <div>{{coin.marketCapUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
-        </div>
-        <div class="supply">
-            <div>Supply: {{coin.supply | number: '.2-2'}} {{coin.symbol}}</div>
-            <div *ngIf="coin.maxSupply; else infinity">Max. supply: {{coin.maxSupply | number: '.2-2'}} {{coin.symbol}}</div>
-            <ng-template #infinity>
-                <div>Max. supply: &#8734;</div>
-            </ng-template>
-        </div>
-        <div></div>
-    </div>
-</main>
+        <chart *ngIf="coin" [id]="id" [name]="coin.name" (error)="errorOccurred($event)"></chart>
+    </main>
+</ng-template>

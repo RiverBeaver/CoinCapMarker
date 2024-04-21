@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CoinsTableComponent } from './coins-table.component';
 import { CoinSearchComponent } from './coin-search/coin-search.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ErrorModule } from '../error/error.module';
+import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';
 
 
 
@@ -14,6 +16,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
   imports: [
     NgxPaginationModule,
     CommonModule,
+    ErrorModule,
+    LoadingIndicatorComponent
   ],
   exports: [
     CoinsTableComponent

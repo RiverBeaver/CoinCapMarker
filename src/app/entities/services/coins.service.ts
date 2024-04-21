@@ -11,8 +11,8 @@ export class CoinsService {
     constructor(private http: HttpClient) {
     }
 
-    get getCoins(): Observable<Coin[]> {
-        return this.http.get(`https://api.coincap.io/v2/assets?limit=2000`).pipe(map((data:any)=>{
+    getCoins(limit: number): Observable<Coin[]> {
+        return this.http.get(`https://api.coincap.io/v2/assets?limit=${limit}`).pipe(map((data:any)=>{
             let coins = data["data"];
             const arrayCoins: Coin[] = [];
             for (let i = 0; i < coins.length; i++) {
@@ -28,5 +28,12 @@ export class CoinsService {
             }
             return arrayCoins;
         }));   
+    }
+
+    getCoinsWithoutEmptyLines(coin: Coin): boolean {
+        if (!coin.priceUsd || !+(+coin.priceUsd).toFixed(2)) return false;
+        if (!coin.marketCapUsd || !+(+coin.marketCapUsd).toFixed(2)) return false;
+        if (!coin.changePercent24Hr || !+(+coin.changePercent24Hr).toFixed(2)) return false;
+        return true;
     }
 }
