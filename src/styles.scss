@@ -39,3 +39,59 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+button {
+  outline: none;
+  border: none;
+  background: none;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease-in-out;
+  color: white;
+  padding: 0.125rem 0.75rem;
+
+
+  &.add {
+    background-color: #3498db;
+    box-shadow: -1px -1px 2px 0 #1e618dd3 inset;
+
+    &:hover {
+      background-color: #2f90d1;
+    }
+
+    &:active {
+      background-color: #2f90d1;
+      box-shadow: 1px 1px 1px 0 #1e618dd3 inset;
+    }
+  }
+
+  &.delete {
+    background-color: #e74c3c;
+    box-shadow: -1px -1px 2px 0 #992e22de inset;
+
+    &:hover {
+      background-color: #d83726;
+    }
+
+    &:active {
+      background-color: #d83726;
+      box-shadow: 1px 1px 1px 0 #992e22de inset;
+    }
+  }
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+select {
+  cursor: pointer;
+}
+
+body {
+  height: auto;
+
+  ul {
+    padding: 0;
+  }
+}

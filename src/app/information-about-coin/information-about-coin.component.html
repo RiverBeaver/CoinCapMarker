@@ -2,30 +2,41 @@
     <error [error]="error"></error>
 </div>
 <ng-template #information>
+    <modal-windows [isVisible]="isVisibleModalAddCoin" [coin]="coinTransferredByModal" (onClose)="closeModal()"></modal-windows>
     <main>
-        <button><a href="">Go back</a></button>
-        <div class="info" *ngIf="coin">
-            <div>
-                <img src="{{coin.logo}}" alt="">
-                <span class="name">{{coin.name}}</span> 
-                <span class="symbol">{{coin.symbol}}</span> 
-                <span>{{coin.rank}}</span>
-                <button>Add</button>
+        <div class="info-and-button">
+            <button class="go-back"><a href=""><img src="../../assets/img/turn-left.png" alt=""></a></button>
+            <div class="info" *ngIf="coin">
+                <div class="basic-information">
+                    <div class="logo-and-name">
+                        <img src="{{coin.logo}}" alt="">
+                        <div>
+                            <div class="name-and-symbol">
+                                <span class="name">{{coin.name}}</span> 
+                                <span class="symbol">{{coin.symbol}}</span> 
+                            </div>
+                            <span class="rank">Rank: {{coin.rank}}</span>
+                            <button class="add" (click)="addCoin($event, coin)">Add</button>
+                        </div>
+                    </div>
+
+                    <div class="current-price">
+                        <div class="price-usd">{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
+                        <div class="change-percent-24hr" [ngClass]="{'negative': +coin.changePercent24Hr < 0, 'positive': +coin.changePercent24Hr > 0}">{{coin.changePercent24Hr | number: '.2-2'}}% (1d)</div>
+                    </div>
+                </div>
+                <div class="other-info">
+                    <div>Market cap: {{coin.marketCapUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
+                    <div>Supply: {{coin.supply | number: '.2-2'}}&nbsp;{{coin.symbol}}</div>
+                    <div *ngIf="coin.maxSupply; else infinity">Max. supply: {{coin.maxSupply | number: '.2-2'}}&nbsp;{{coin.symbol}}</div>
+                    <ng-template #infinity>
+                        <div>Max. supply: &#8734;</div>
+                    </ng-template>
+                </div>
+                <div></div>
             </div>
-            <div class="price">
-                <div>{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
-                <div>{{coin.changePercent24Hr | number: '.2-2'}} % (1d)</div>
-                <div>Market cap: {{coin.marketCapUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
-            </div>
-            <div class="supply">
-                <div>Supply: {{coin.supply | number: '.2-2'}} {{coin.symbol}}</div>
-                <div *ngIf="coin.maxSupply; else infinity">Max. supply: {{coin.maxSupply | number: '.2-2'}} {{coin.symbol}}</div>
-                <ng-template #infinity>
-                    <div>Max. supply: &#8734;</div>
-                </ng-template>
-            </div>
-            <div></div>
         </div>
+        
         <chart *ngIf="coin" [id]="id" [name]="coin.name" (error)="errorOccurred($event)"></chart>
     </main>
 </ng-template>

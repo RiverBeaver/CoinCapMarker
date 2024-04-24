@@ -3,7 +3,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
 import { Coin } from '../entities/classes/coin.class';
-import { CoinInfo } from '../entities/services/coin-info.service';
+import { CointInfoService } from '../entities/services/coin-info.service';
+
 
 @Component({
   selector: 'app-information-about-coin',
@@ -13,12 +14,15 @@ import { CoinInfo } from '../entities/services/coin-info.service';
 export class InformationAboutCoinComponent implements OnDestroy {
   id!: string;
   public coin!: Coin;
-  public error!: HttpErrorResponse;
+  public error: HttpErrorResponse | null = null;
   private subscription!: Subscription;
+
+  isVisibleModalAddCoin: boolean = false;
+  coinTransferredByModal: Coin | null = null;
 
   constructor(
     private route: ActivatedRoute, 
-    private cointInfoService: CoinInfo){
+    private cointInfoService: CointInfoService){
   }
   ngOnInit() {
     this.route.paramMap.pipe(
@@ -26,6 +30,7 @@ export class InformationAboutCoinComponent implements OnDestroy {
     )
     .subscribe(data=> {
       this.id = data;
+      this.error = null
       this.getCionInfo();
     });
   }
@@ -41,6 +46,17 @@ export class InformationAboutCoinComponent implements OnDestroy {
 
   errorOccurred(error: HttpErrorResponse) {
     this.error = error;
+  }
+
+  addCoin(event:Event, coin: Coin) {
+    event.stopPropagation()
+    this.isVisibleModalAddCoin = true;
+    this.coinTransferredByModal = coin;
+  }
+
+  closeModal() {
+    this.isVisibleModalAddCoin = false;
+    this.coinTransferredByModal = null;
   }
 
   ngOnDestroy(): void {

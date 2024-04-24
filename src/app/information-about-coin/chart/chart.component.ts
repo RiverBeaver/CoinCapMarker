@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { Subscription } from 'rxjs';
 import { ChartService } from 'src/app/entities/services/chart.service';
@@ -11,7 +11,7 @@ import { VisualChartsService } from 'src/app/entities/services/visual-charts.ser
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: any;
   private subscription!: Subscription;
@@ -26,7 +26,7 @@ export class ChartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getChartPoints('m5', 1, [ 'hour', [2]]);
+    this.getChartPoints('m5', 1, [ 'hour', [3]]);
   }
 
   public getChartPoints(interval:string, days: number, unit: [string, number[]]) {
@@ -41,11 +41,15 @@ export class ChartComponent implements OnInit {
   }
   changeBar(event: Event) {
     switch ((event.target as HTMLSelectElement).value) {
-      case 'd1': this.getChartPoints('m5', 1, [ 'hour', [2]]);
+      case 'd1': this.getChartPoints('m5', 1, [ 'hour', [3]]);
         break;
-      case 'd7': this.getChartPoints('m15', 7, [ 'hour', [12]]);
+      case 'd7': this.getChartPoints('m15', 7, [ 'day', [1]]);
         break;
-      case 'm1': this.getChartPoints('h1', 30, [ 'day', [2]]);
+      case 'm1': this.getChartPoints('h1', 30, [ 'day', [3]]);
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getChartPoints('m5', 1, [ 'hour', [3]]);
   }
 }

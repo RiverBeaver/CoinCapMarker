@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Coin } from '../entities/classes/coin.class';
 import { CoinsService } from '../entities/services/coins.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'coins-table',
@@ -13,17 +14,25 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class CoinsTableComponent implements OnInit, OnDestroy{
   coins: Coin[] = [];
   allCoins: Coin[] = [];
-  private subscription!: Subscription;
   private sortCount = [0, 0, 0, 0];
+
   page:number = 1;
   count:number = 0;
   tableSize:number = 50;
   tableSizes:any = [10,15,20,25];
-  public error!: HttpErrorResponse;
+  
+  isVisibleModalAddCoin: boolean = false;
+  coinTransferredByModal: Coin | null = null;
+
+  error!: HttpErrorResponse;
+  private subscription!: Subscription;
+
+  windowScrolled!: boolean;
   
   constructor(
     private coinsService: CoinsService, 
-    private router: Router) {}
+    private router: Router,
+    @Inject(DOCUMENT) private document: Document) {}
 
   ngOnInit() {
     this.getCoins();
@@ -50,6 +59,7 @@ export class CoinsTableComponent implements OnInit, OnDestroy{
 
   changeTableSize(event:Event) {
     this.tableSize = +(event.target as HTMLSelectElement).value;
+    this.onTableDataChange(1)
   }
 
   public sort(index: number) {
@@ -78,7 +88,34 @@ export class CoinsTableComponent implements OnInit, OnDestroy{
     this.coins = event;
   }
 
+  addCoin(event:Event, coin: Coin) {
+    event.stopPropagation()
+    this.isVisibleModalAddCoin = true;
+    this.coinTransferredByModal = coin;
+  }
+
+  closeModal() {
+    this.isVisibleModalAddCoin = false;
+    this.coinTransferredByModal = null;
+  }
+
   public ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  @HostListener("window:scroll", [])
+  onWindowScroll() {
+      if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
+          this.windowScrolled = true;
+      } 
+     else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+          this.windowScrolled = false;
+      }
+  }
+  scrollToTop() {
+    var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    if (currentScroll > 0) {
+      window.scrollTo(0, 0);
+    }
   }
 }

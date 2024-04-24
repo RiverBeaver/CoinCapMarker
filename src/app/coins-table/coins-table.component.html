@@ -2,41 +2,61 @@
     <error [error]="error"></error>
 </div>
 <ng-template #table>
-    <coin-search [allCoins]="allCoins" (onChangedDesiredСoin)="coinsChange($event)"></coin-search>
-
-    <div>Show rows <select name="rows" id="rows" (change)="changeTableSize($event)">
-        <option value="100">100</option>
-        <option value="50" selected>50</option>
-        <option value="20">20</option>
-    </select></div>
-    <table>
+    <modal-windows [isVisible]="isVisibleModalAddCoin" [coin]="coinTransferredByModal" (onClose)="closeModal()"></modal-windows>
+    <div class="container-table">
         <loading-indicator></loading-indicator>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th (click)="sort(1)">Price</th>
-                <th (click)="sort(2)">24h %</th>
-                <th (click)="sort(3)">Market Cap</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let coin of coins | paginate:{itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i index" (click)="moreDetailed(coin.id)">
-                <td>
-                    <img src="{{coin.logo}}" alt="">
-                    <span class="name">{{coin.name}}</span>
-                    <span class="symbol">{{coin.symbol}}</span>
-                </td>
-                <td>{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</td>
-                <td>{{coin.changePercent24Hr | number: '.2-2'}} %</td>
-                <td>{{coin.marketCapUsd | currency: 'CAD' : 'symbol-narrow' : '4.2-2'}}</td>
-                <td><button>Add</button></td>
-            </tr>
-        </tbody>
-    </table>
-    <div>
-        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
-    
-        </pagination-controls>
+
+        <coin-search [allCoins]="allCoins" (onChangedDesiredСoin)="coinsChange($event)"></coin-search>
+
+        <div class="pagination-top">
+            <div class="show-rows">Show rows 
+                <select name="rows" id="rows" (change)="changeTableSize($event)">
+                    <option value="100">100</option>
+                    <option value="50" selected>50</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+            <div class="pagination">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)" (click)="scrollToTop()">
+            
+                </pagination-controls>
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th><span (click)="sort(1)">Price</span></th>
+                    <th><span (click)="sort(2)">24h %</span></th>
+                    <th><span (click)="sort(3)">Market Cap</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let coin of coins | paginate:{itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i index" (click)="moreDetailed(coin.id)">
+                    <td class="logo-and-name">
+                        <img src="{{coin.logo}}" alt="">
+                        <div class="name-and-symbol">
+                            <span class="name">{{coin.name}}</span>
+                            <span class="symbol">{{coin.symbol}}</span>
+                        </div>
+                    </td>
+                    <td>{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</td>
+                    <td class="change-percent-24hr" [ngClass]="{'negative': +coin.changePercent24Hr < 0, 'positive': +coin.changePercent24Hr > 0}">{{coin.changePercent24Hr | number: '.2-2'}} %</td>
+                    <td>{{coin.marketCapUsd | currency: 'CAD' : 'symbol-narrow' : '4.2-2'}}</td>
+                    <td><button class="add" (click)="addCoin($event, coin)">Add</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)" (click)="scrollToTop()">
+        
+            </pagination-controls>
+        </div>
+    </div>
+    <div class="scroll-to-top" [ngClass]="{'show-scrollTop': windowScrolled}">
+        <button (click)="scrollToTop()">
+            <i class="fa fa-chevron-up"><img src="../../assets/img/top-up3.png" alt=""></i>
+        </button>
     </div>
 </ng-template>

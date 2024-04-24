@@ -4,7 +4,7 @@ import { map, Observable } from "rxjs";
 import { Coin } from "../classes/coin.class";
 
 @Injectable()
-export class CoinInfo {
+export class CointInfoService {
     constructor(private http: HttpClient) {
     }
 

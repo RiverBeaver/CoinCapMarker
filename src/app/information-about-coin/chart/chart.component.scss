@@ -1,3 +1,8 @@
-div {
+div.container-chart {
     position: relative;
+
+    div.select {
+        display: flex;
+        justify-content: end;
+    }
 }

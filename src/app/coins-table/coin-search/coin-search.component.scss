@@ -1,0 +1,22 @@
+div.container-search {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+
+    > div {
+        display: flex;
+        gap: 0.25rem;
+        border-radius: 5rem;
+        background-color: #EFF2F5;
+        padding: 0.5rem 1rem;
+    
+        img {
+            width: 1rem;
+        }
+        
+        input {
+            background-color: #EFF2F5;
+        }
+    }
+}

@@ -1,0 +1,101 @@
+div.body {
+
+    div.info-and-price {
+        display: flex;
+        gap: 1.25rem;
+        align-items: center;
+        margin-bottom: 0.75rem;
+
+        div.info {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+    
+            img {
+                width: 2rem;
+            }
+    
+            div.name-and-symbol {
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+                flex-wrap: wrap;
+    
+                .name {
+                    font-weight: 500;
+                }
+    
+                .symbol {
+                    color: #616e85;
+                    font-weight: normal;
+                }
+            }
+        }
+        div.price {
+            white-space: nowrap;
+            font-weight: 500;
+        }
+    }
+
+    div.quantity-and-total-price {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem 1.5rem;
+
+
+
+        .quantity, .total-price {
+            display: flex;
+            gap: 0.625rem;
+            align-items: center;
+            padding-bottom: 0.625rem;
+            
+            > div.input {
+                border-radius: 5rem;
+                background-color: #EFF2F5;
+                padding: 0.25rem 0.5rem 0.25rem 1rem;
+
+                input {
+                    background-color: #EFF2F5;
+                    width: 6.5rem;
+                    padding: 0;
+                }
+            }
+
+            > div.price {
+                border-radius: 5rem;
+                background-color: #EFF2F5;
+                padding: 0.25rem 1rem;
+                box-sizing: content-box;
+                min-width: 6.5rem;
+            }
+        }    
+    }
+
+    div.advice {
+        font-size: 0.75rem;
+        color: #9ba4ae;
+        padding-bottom: 1rem;
+        border-bottom: dotted 1px #eceeef;
+    }
+
+    div.button {
+        padding-top: 1rem;
+        display: flex;
+        justify-content: center;
+
+        button {
+            width: 55%;
+            padding: 0.25rem 0;
+            text-align: center;
+            pointer-events: auto;
+
+            &.block {
+                pointer-events: none;
+                background-color: #718fa3f2;
+            }
+        }
+    }
+
+
+}

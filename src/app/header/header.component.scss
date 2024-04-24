@@ -1,25 +1,59 @@
 header {
     display: flex;
     justify-content: space-between;
+    gap: 0.625rem 1.75rem;
+    // flex-wrap: wrap;
     padding: 1rem 2rem;
     margin-bottom: 2rem;
-    background-color: #74d4f3e0;
-    position: sticky;
+    background-color: #c2e6fff7;
+    box-shadow: 1px 0 10px -1px #8fd2fff7;
+    position: fixed;
     top: 0px;
+    left: 0;
+    right: 0;
     z-index: 2;
+    font-weight: 500;
 
     div.top3 {
         display: flex;
-        gap: 2rem;
+        gap: 0.25rem 1.5rem;
 
         div {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             align-items: center;
+            cursor: pointer;
 
             img {
                 width: 1.5rem;
             }
+        }
+    }
+
+    div.briefcase {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        cursor: pointer;
+
+        .difference {
+            &.negative {
+                color: #EA3943;
+            }
+
+            &.positive {
+                color: #16C784;
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+
+        div.briefcase {
+            align-self: flex-end;
         }
     }
 }

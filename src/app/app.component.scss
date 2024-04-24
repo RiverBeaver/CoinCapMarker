@@ -1,0 +1,9 @@
+div.container-app {
+    margin-top: 4rem;
+}
+
+@media (max-width: 650px) {
+    div.container-app {
+        margin-top: 5.25rem;
+    }
+}

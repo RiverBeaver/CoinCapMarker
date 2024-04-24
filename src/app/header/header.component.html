@@ -1,8 +1,18 @@
+<modal-windows [isVisible]="isVisualBriefcase" [briefcase]="briefcase" (onClose)="closeBriefcase()"></modal-windows>
 <header>
     <div class="top3">
         <div *ngFor="let coin of topCoins" (click)="moreDetailed(coin.id)">
             <img src="{{coin.logo}}" alt="">
             <span>{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</span>
+        </div>
+    </div>
+    <div class="briefcase" (click)="openBriefcase()">
+        <div class="briefcase-value">{{briefcaseValue | async | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
+        <div class="difference" *ngIf="+differenceValue.getValue().toFixed(2)" 
+        [ngClass]="{'negative': +differenceValue.getValue() < 0, 'positive': +differenceValue.getValue() > 0}">
+        <!-- && (+(percentageDifferenceValue.getValue() * 100).toFixed(2) || ) -->
+            <span *ngIf="differenceValue.getValue() > 0">+</span>{{differenceValue | async | number : '.2-2'}} 
+            ({{percentageDifferenceValue | async | percent: '.2-2'}})
         </div>
     </div>
 </header>

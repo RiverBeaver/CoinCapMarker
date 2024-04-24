@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="coin-in-briefcase" *ngFor="let coinInBriefcase of briefcase" (click)="coinInBriefcase.isHidden = !coinInBriefcase.isHidden">
+        <div class="info">
+            <div class="basic-information">
+                <img src="{{coinInBriefcase.coin.logo}}" alt="">
+                <div class="name-and-symbol">
+                    <span class="name">{{coinInBriefcase.coin.name}}</span>
+                    <span class="symbol">{{coinInBriefcase.coin.symbol}}</span>
+                </div>  
+                <span title="The price at the time of purchase">{{coinInBriefcase.coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</span>
+                <span title="The quantity of coins purchased">{{coinInBriefcase.quantity}} pcs.</span>
+            </div>
+            <div class="other">
+                <span title="The time when the purchase of coins was made">{{coinInBriefcase.timeAddition | date: 'M/d/yy, h:mm a'}}</span>
+                <img [ngClass]="{'unwrap': !coinInBriefcase.isHidden}" src="../../../assets/img/unwrap.png" alt="">
+            </div>
+
+        </div>
+        <div class="more-info-and-delete" [hidden]="coinInBriefcase.isHidden">
+            <div class="more-info">
+                <div>
+                    Total cost of the purchase: {{(+coinInBriefcase.coin.priceUsd * coinInBriefcase.quantity) | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}
+                    ({{coinInBriefcase.quantity}} pcs.)
+                </div>
+                <div title="The current price of the coin: {{getCurrentPrice(coinInBriefcase.coin.id) | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}">
+                    Сurrent total cost: {{(+getCurrentPrice(coinInBriefcase.coin.id) * coinInBriefcase.quantity) | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}
+                    ({{coinInBriefcase.quantity}} pcs.)
+                </div>
+            </div>
+            <div class="delete-block">
+                <button class="delete" (click)="deleteCoinFromBriefcase(coinInBriefcase)">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="body" *ngIf="coin">
+  <div class="info-and-price">
+    <div class="info">
+      <img src="{{coin.logo}}" alt="">
+      <div class="name-and-symbol">
+        <span class="name">{{coin.name}}</span>
+        <span class="symbol">{{coin.symbol}}</span>        
+      </div>
+    </div>
+    <div class="price" title="{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.5-5'}}">{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}} (1 pcs.)</div>
+  </div>
+  <div class="quantity-and-total-price">
+    <div class="quantity">
+      <label for="">Quantity: </label>
+      <div class="input">
+        <input type="number" min="1" value="{{quantity}}" (input)="onChangeQuantity($event)">
+      </div>
+    </div>
+    <div class="total-price">
+      <div>Total price:</div>
+      <div class="price" title="{{totalPrice | currency: 'CAD' : 'symbol-narrow' : '.5-5'}}">{{totalPrice | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
+    </div>
+  </div>
+  <div class="advice">The total price must be at least $1</div>
+  <div class="button">
+    <button class="add" (click)="addInBriefcase()" [ngClass]="{'block': totalPrice < 1}">Add in briefcase</button>
+  </div>
+</div>

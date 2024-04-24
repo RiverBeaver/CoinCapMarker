@@ -5,6 +5,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { ChartComponent } from './chart/chart.component';
 import { ErrorModule } from '../error/error.module';
 import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';
+import { ModalWindowsModule } from '../modal-windows/modal-windows.module';
 
 
 
@@ -17,10 +18,11 @@ import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicato
     CommonModule,
     HighchartsChartModule,
     ErrorModule,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    ModalWindowsModule
   ],
   exports: [
-    InformationAboutCoinComponent
+    InformationAboutCoinComponent,
   ]
 })
 export class InformationAboutCoinModule { }

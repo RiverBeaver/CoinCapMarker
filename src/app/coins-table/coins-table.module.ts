@@ -5,6 +5,7 @@ import { CoinSearchComponent } from './coin-search/coin-search.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ErrorModule } from '../error/error.module';
 import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';
+import { ModalWindowsModule } from '../modal-windows/modal-windows.module';
 
 
 
@@ -17,7 +18,8 @@ import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicato
     NgxPaginationModule,
     CommonModule,
     ErrorModule,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    ModalWindowsModule
   ],
   exports: [
     CoinsTableComponent

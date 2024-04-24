@@ -1,0 +1,106 @@
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 1.5rem;
+
+    > div.info-and-button {
+        display: flex;
+        gap: 0.25rem;
+        align-items: start;
+
+        > button.go-back {
+    
+            a {
+                text-decoration: none;
+                img {
+                    width: 3.25rem;
+                }
+            }
+        }
+
+        > div.info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+
+            div.basic-information {
+                display: flex;
+                align-items: center;
+                gap: 1rem 3.5rem;
+                flex-wrap: wrap;
+
+                div.logo-and-name {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    > img {
+                        width: 5rem;
+                    }
+        
+                    > div {
+                        display: grid;
+                        justify-items: start;
+                        gap: 0.125rem;
+        
+                        > div.name-and-symbol {
+                            display: flex;
+                            align-items: center;
+                            gap: 0.25rem;
+                            flex-wrap: wrap;
+                            
+                            .name {
+                                font-size: 1.25rem;
+                                font-weight: 600;
+                            }
+        
+                            .symbol {
+                                color: #616e85;
+                                position: relative;
+                                top: 0.125rem;
+                            }
+                        }
+                    }
+                }
+
+                > .current-price {
+                    display: flex;
+                    gap: 0.5rem;
+                    align-items: center;
+                    flex-wrap: wrap;
+    
+                    .price-usd {
+                        line-height: normal;
+                        font-size: 2rem;
+                        font-weight: 600;
+                    }
+    
+                    .change-percent-24hr {
+                        font-weight: 600;
+    
+                        &.negative {
+                            color: #EA3943;
+                        }
+    
+                        &.positive {
+                            color: #16C784;
+                        }
+                    }
+                }
+    
+ 
+            }
+        
+            div.price {
+                display: grid;
+    
+                
+            }
+        }
+
+        div.other-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+    }
+}

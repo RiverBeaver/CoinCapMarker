@@ -1,0 +1,16 @@
+<div class="model-briefcase" [ngClass]="{'visible-briefcase': isVisible}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">{{title}}</h3>
+          <div title="Close" class="close" (click)="close()">×</div>
+        </div>
+        <div class="modal-body" *ngIf="coin">
+            <modal-add-coin-in-briefcase [coin]="coin" (onClose)="close()"></modal-add-coin-in-briefcase>            
+        </div>
+        <div class="modal-body" *ngIf="briefcase">
+            <modal-briefcase [briefcase]="briefcase"></modal-briefcase>          
+        </div>
+      </div>
+    </div>
+</div>
