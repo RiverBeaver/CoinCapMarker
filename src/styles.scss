@@ -88,6 +88,19 @@ select {
   cursor: pointer;
 }
 
+::-webkit-scrollbar {
+  width: 0.25em;
+}
+
+body::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2f90d1;
+  border-radius: 3px;
+}
+
 body {
   height: auto;
 
