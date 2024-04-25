@@ -8,7 +8,7 @@
                     <span class="symbol">{{coinInBriefcase.coin.symbol}}</span>
                 </div>  
                 <span title="The price at the time of purchase">{{coinInBriefcase.coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</span>
-                <span title="The quantity of coins purchased">{{coinInBriefcase.quantity}} pcs.</span>
+                <span title="The quantity of coins purchased">{{coinInBriefcase.quantity}}&nbsp;pcs.</span>
             </div>
             <div class="other">
                 <span title="The time when the purchase of coins was made">{{coinInBriefcase.timeAddition | date: 'M/d/yy, h:mm a'}}</span>
@@ -20,11 +20,11 @@
             <div class="more-info">
                 <div>
                     Total cost of the purchase: {{(+coinInBriefcase.coin.priceUsd * coinInBriefcase.quantity) | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}
-                    ({{coinInBriefcase.quantity}} pcs.)
+                    ({{coinInBriefcase.quantity}}&nbsp;pcs.)
                 </div>
                 <div title="The current price of the coin: {{getCurrentPrice(coinInBriefcase.coin.id) | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}">
                     Сurrent total cost: {{(+getCurrentPrice(coinInBriefcase.coin.id) * coinInBriefcase.quantity) | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}
-                    ({{coinInBriefcase.quantity}} pcs.)
+                    ({{coinInBriefcase.quantity}}&nbsp;pcs.)
                 </div>
             </div>
             <div class="delete-block">

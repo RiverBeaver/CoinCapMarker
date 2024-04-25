@@ -6,7 +6,7 @@ main {
     > div.info-and-button {
         display: flex;
         gap: 0.25rem;
-        align-items: start;
+        align-items: flex-start;
 
         > button.go-back {
     
@@ -39,7 +39,7 @@ main {
         
                     > div {
                         display: grid;
-                        justify-items: start;
+                        justify-items: flex-start;
                         gap: 0.125rem;
         
                         > div.name-and-symbol {

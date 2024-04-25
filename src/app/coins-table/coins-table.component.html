@@ -27,7 +27,7 @@
                 <tr>
                     <th>Name</th>
                     <th><span (click)="sort(1)">Price</span></th>
-                    <th><span (click)="sort(2)">24h %</span></th>
+                    <th><span (click)="sort(2)">24h%</span></th>
                     <th><span (click)="sort(3)">Market Cap</span></th>
                     <th></th>
                 </tr>
@@ -42,7 +42,7 @@
                         </div>
                     </td>
                     <td>{{coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</td>
-                    <td class="change-percent-24hr" [ngClass]="{'negative': +coin.changePercent24Hr < 0, 'positive': +coin.changePercent24Hr > 0}">{{coin.changePercent24Hr | number: '.2-2'}} %</td>
+                    <td class="change-percent-24hr" [ngClass]="{'negative': +coin.changePercent24Hr < 0, 'positive': +coin.changePercent24Hr > 0}">{{coin.changePercent24Hr | number: '.2-2'}}%</td>
                     <td>{{coin.marketCapUsd | currency: 'CAD' : 'symbol-narrow' : '4.2-2'}}</td>
                     <td><button class="add" (click)="addCoin($event, coin)">Add</button></td>
                 </tr>
