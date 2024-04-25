@@ -19,6 +19,10 @@ export class ModalWindowsComponent implements OnChanges {
     this.onClose.emit(false);
   }
 
+  interception(event: Event) {
+    event.stopPropagation();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['coin']) {
       this.title = 'Add Coin';

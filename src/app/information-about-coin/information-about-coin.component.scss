@@ -5,7 +5,7 @@ main {
 
     > div.info-and-button {
         display: flex;
-        gap: 0.25rem;
+        gap: 2.5rem;
         align-items: flex-start;
 
         > button.go-back {
@@ -13,7 +13,7 @@ main {
             a {
                 text-decoration: none;
                 img {
-                    width: 3.25rem;
+                    width: 2.625rem;
                 }
             }
         }
@@ -101,6 +101,10 @@ main {
             display: flex;
             flex-direction: column;
             gap: 0.25rem;
+
+            span {
+                font-weight: 600;
+            }
         }
     }
 }

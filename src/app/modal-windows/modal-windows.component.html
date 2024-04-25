@@ -1,5 +1,5 @@
-<div class="model-briefcase" [ngClass]="{'visible-briefcase': isVisible}">
-    <div class="modal-dialog">
+<div class="model-briefcase" [ngClass]="{'visible-briefcase': isVisible}" (click)="close()">
+    <div class="modal-dialog" (click)="interception($event)">
       <div class="modal-content">
         <div class="modal-header">
           <h3 class="modal-title">{{title}}</h3>

@@ -1,10 +1,13 @@
 <main>
     <loading-indicator></loading-indicator>
-    <button class="go-back"><a href=""><img src="assets/img/turn-left.png" alt=""></a></button>
     <div class="error">
         <div class="status">
             {{error.status}}
         </div>
-        <div class="error-message">{{error.error.error}}</div>        
+        <div class="error-message-and-go-back">
+            <div class="error-message">{{error.error.error}}</div>  
+            <a href=""><button class="go-back">Back to main page</button></a>             
+        </div>
+     
     </div>
 </main>

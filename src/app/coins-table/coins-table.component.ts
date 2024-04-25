@@ -89,7 +89,7 @@ export class CoinsTableComponent implements OnInit, OnDestroy{
   }
 
   addCoin(event:Event, coin: Coin) {
-    event.stopPropagation()
+    event.stopPropagation();
     this.isVisibleModalAddCoin = true;
     this.coinTransferredByModal = coin;
   }

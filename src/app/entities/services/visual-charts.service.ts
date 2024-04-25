@@ -7,18 +7,9 @@ export class VisualChartsService {
             title: {
               text: 'Price change chart'
             },
-            // plotOptions: {
-            //   pie: {
-            //     allowPointSelect: true,
-            //     cursor: 'pointer',
-            //     dataLabels: {
-            //       enabled: true,
-            //       format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-            //     }
-            //   }
-            // },
+
             tooltip: {
-              // shared: true,
+              shared: true,
               useHTML: true,
               headerFormat: '<table><tr><th colspan="2">{point.key}</th></tr>',
               pointFormat: '<tr><td style="color: {series.color}; font-weight: 900; text-shadow: {series.color} 0px 1px 1px;">{series.name}: ' +
@@ -38,7 +29,8 @@ export class VisualChartsService {
             },
             yAxis: {
               title:{
-                text: 'Price, USD'
+                text: 'Price, USD',
+                margin: 25
               }
             },
             series: [{

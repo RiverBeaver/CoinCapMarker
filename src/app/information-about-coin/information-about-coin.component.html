@@ -26,9 +26,9 @@
                     </div>
                 </div>
                 <div class="other-info">
-                    <div>Market cap: {{coin.marketCapUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
-                    <div>Supply: {{coin.supply | number: '.2-2'}}&nbsp;{{coin.symbol}}</div>
-                    <div *ngIf="coin.maxSupply; else infinity">Max. supply: {{coin.maxSupply | number: '.2-2'}}&nbsp;{{coin.symbol}}</div>
+                    <div><span>Market cap:</span> {{coin.marketCapUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2'}}</div>
+                    <div><span>Supply:</span> {{coin.supply | number: '.2-2'}}&nbsp;{{coin.symbol}}</div>
+                    <div *ngIf="coin.maxSupply; else infinity"><span>Max. supply:</span> {{coin.maxSupply | number: '.2-2'}}&nbsp;{{coin.symbol}}</div>
                     <ng-template #infinity>
                         <div>Max. supply: &#8734;</div>
                     </ng-template>
