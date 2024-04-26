@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
+import { time } from 'highcharts';
 
 @Component({
   selector: 'coins-table',
@@ -18,8 +19,8 @@ export class CoinsTableComponent implements OnInit, OnDestroy{
 
   page:number = 1;
   count:number = 0;
-  tableSize:number = 50;
-  tableSizes:any = [10,15,20,25];
+  tableSize:number = 100;
+  tableSizes:any = [100, 200];
   
   isVisibleModalAddCoin: boolean = false;
   coinTransferredByModal: Coin | null = null;
@@ -35,13 +36,17 @@ export class CoinsTableComponent implements OnInit, OnDestroy{
     @Inject(DOCUMENT) private document: Document) {}
 
   ngOnInit() {
-    this.getCoins();
+    this.getCoins(2000);
+    this.getCoins(this.tableSize);
   }
 
-  getCoins() {
-    this.subscription = this.coinsService.getCoins(2000).subscribe({next:(data: Coin[]) => {
+  getCoins(limit: number, offset: number = 0) {
+    this.subscription = this.coinsService.getCoins(limit, offset).subscribe({next:(data: Coin[]) => {
       this.coins = data.filter(this.coinsService.getCoinsWithoutEmptyLines);
       this.allCoins = this.coins;
+      if (limit === 2000) {
+        this.count = +this.allCoins[this.allCoins.length-1].rank;
+      }
     },
     error: (error:HttpErrorResponse) => {
       this.error = error;
@@ -50,11 +55,13 @@ export class CoinsTableComponent implements OnInit, OnDestroy{
 
   onTableDataChange(e:any){
     this.page = e;
+    this.getCoins(this.tableSize, this.tableSize * (this.page-1))
   }
 
   onSizeChange(e:any){
     this.tableSize = e.target.value;
     this.page = 1;
+    this.getCoins(this.tableSize)
   }
 
   changeTableSize(event:Event) {

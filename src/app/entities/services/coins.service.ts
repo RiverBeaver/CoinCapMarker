@@ -11,8 +11,8 @@ export class CoinsService {
     constructor(private http: HttpClient) {
     }
 
-    getCoins(limit: number): Observable<Coin[]> {
-        return this.http.get(`https://api.coincap.io/v2/assets?limit=${limit}`).pipe(map((data:any)=>{
+    getCoins(limit: number, offset: number = 0): Observable<Coin[]> {
+        return this.http.get(`https://api.coincap.io/v2/assets?limit=${limit}&offset=${offset}`).pipe(map((data:any)=>{
             let coins = data["data"];
             const arrayCoins: Coin[] = [];
             for (let i = 0; i < coins.length; i++) {
