@@ -27,8 +27,10 @@ export class CoinsTableComponent implements OnInit, OnDestroy{
 
   error!: HttpErrorResponse;
   private subscription!: Subscription;
+  private subscription2!:Subscription;
 
   windowScrolled!: boolean;
+  searchMode: boolean = false;
   
   constructor(
     private coinsService: CoinsService, 
@@ -36,17 +38,24 @@ export class CoinsTableComponent implements OnInit, OnDestroy{
     @Inject(DOCUMENT) private document: Document) {}
 
   ngOnInit() {
-    this.getCoins(2000);
-    this.getCoins(this.tableSize);
+    this.getAllCoins(2000);
+    this.getCurrentCoins(this.tableSize);
   }
 
-  getCoins(limit: number, offset: number = 0) {
+  getAllCoins(limit: number, offset: number = 0) {
     this.subscription = this.coinsService.getCoins(limit, offset).subscribe({next:(data: Coin[]) => {
+      this.allCoins = data.filter(this.coinsService.getCoinsWithoutEmptyLines);
+      this.count = +this.allCoins[this.allCoins.length-1].rank;
+    },
+    error: (error:HttpErrorResponse) => {
+      this.error = error;
+    }});   
+  }
+
+  getCurrentCoins(limit: number, offset: number = 0) {
+    this.subscription2 = this.coinsService.getCoins(limit, offset).subscribe({next:(data: Coin[]) => {
       this.coins = data.filter(this.coinsService.getCoinsWithoutEmptyLines);
-      this.allCoins = this.coins;
-      if (limit === 2000) {
-        this.count = +this.allCoins[this.allCoins.length-1].rank;
-      }
+      this.subscription2.unsubscribe();
     },
     error: (error:HttpErrorResponse) => {
       this.error = error;
@@ -55,13 +64,13 @@ export class CoinsTableComponent implements OnInit, OnDestroy{
 
   onTableDataChange(e:any){
     this.page = e;
-    this.getCoins(this.tableSize, this.tableSize * (this.page-1))
+    this.getCurrentCoins(this.tableSize, this.tableSize * (this.page-1))
   }
 
   onSizeChange(e:any){
     this.tableSize = e.target.value;
     this.page = 1;
-    this.getCoins(this.tableSize)
+    this.getCurrentCoins(this.tableSize)
   }
 
   changeTableSize(event:Event) {
@@ -91,8 +100,15 @@ export class CoinsTableComponent implements OnInit, OnDestroy{
     this.router.navigate([`/coins/${id}`]);
   }
 
-  coinsChange(event: Coin[]) {
-    this.coins = event;
+  coinsChange(event: {coins: Coin[], value: string}) {
+    if (event.value != '') {
+      this.coins = event.coins;
+      this.searchMode = true;
+    } else {
+      this.getCurrentCoins(this.tableSize);
+      this.searchMode = false;
+    }
+
   }
 
   addCoin(event:Event, coin: Coin) {

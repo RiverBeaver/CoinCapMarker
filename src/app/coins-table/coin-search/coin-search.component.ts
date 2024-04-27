@@ -10,10 +10,10 @@ export class CoinSearchComponent {
   @Input() allCoins!: Coin[];
   public desiredСoin: string = '';
 
-  @Output() onChangedDesiredСoin = new EventEmitter<Coin[]>();
+  @Output() onChangedDesiredСoin = new EventEmitter<{coins: Coin[], value: string}>();
 
   public searchCoin(event: Event) {
     this.desiredСoin = (event.target as HTMLInputElement).value;
-    this.onChangedDesiredСoin.emit(this.allCoins.filter(coin => coin.name.toLowerCase().includes(this.desiredСoin.toLowerCase())));
+    this.onChangedDesiredСoin.emit({coins: this.allCoins.filter(coin => coin.name.toLowerCase().includes(this.desiredСoin.toLowerCase())), value:this.desiredСoin});
   }
 }
