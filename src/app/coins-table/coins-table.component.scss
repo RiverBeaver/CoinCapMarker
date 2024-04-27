@@ -45,7 +45,6 @@ div.container-table {
         width: 100%;
         font-weight: 500;
         overflow-x: auto;
-        white-space: nowrap;
         position: relative;
 
     
@@ -102,7 +101,6 @@ div.container-table {
             }
 
             .change-percent-24hr {
-                white-space: nowrap;
 
                 &.negative {
                     color: #EA3943;

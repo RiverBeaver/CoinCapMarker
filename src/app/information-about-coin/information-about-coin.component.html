@@ -30,7 +30,7 @@
                     <div><span>Supply:</span> {{coin.supply | number: '.2-2'}}&nbsp;{{coin.symbol}}</div>
                     <div *ngIf="coin.maxSupply; else infinity"><span>Max. supply:</span> {{coin.maxSupply | number: '.2-2'}}&nbsp;{{coin.symbol}}</div>
                     <ng-template #infinity>
-                        <div>Max. supply: &#8734;</div>
+                        <div><span>Max. supply:</span> &#8734;</div>
                     </ng-template>
                 </div>
                 <div></div>
