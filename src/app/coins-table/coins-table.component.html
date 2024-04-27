@@ -8,7 +8,7 @@
 
         <coin-search [allCoins]="allCoins" (onChangedDesiredСoin)="coinsChange($event)"></coin-search>
 
-        <div class="pagination-top">
+        <div class="pagination-top" [ngClass]="{'hide-when-searching': searchMode}">
             <div class="show-rows">Show rows 
                 <select name="rows" id="rows" (change)="changeTableSize($event)">
                     <option value="100">100</option>
@@ -47,7 +47,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="pagination">
+        <div class="pagination" [ngClass]="{'hide-when-searching': searchMode}">
             <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)" (click)="scrollToTop()">
         
             </pagination-controls>

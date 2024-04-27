@@ -125,6 +125,11 @@ div.container-table {
     }
 }
 
+.hide-when-searching {
+    opacity: 0;
+    pointer-events: none;
+}
+
 @media (max-width: 720px) {
     div.container-table {
         div.pagination-top {
