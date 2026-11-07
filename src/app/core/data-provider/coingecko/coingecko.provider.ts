@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { forkJoin, map, type Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
@@ -25,23 +25,23 @@ export class CoinGeckoProvider implements CoinsDataProvider {
         const pageCount = Math.ceil(limit / MARKETS_PAGE_SIZE);
         const pages = Array.from({ length: pageCount }, (_, i) => firstPage + i);
 
-        return forkJoin(pages.map(page =>
-            this.http.get<CoinGeckoMarketDto[]>(`${this.apiUrl}/coins/markets`, {
-                headers: this.authHeaders(),
-                params: new HttpParams()
-                    .set('vs_currency', 'usd')
-                    .set('order', 'market_cap_desc')
-                    .set('per_page', MARKETS_PAGE_SIZE)
-                    .set('page', page),
-            }),
-        )).pipe(map(markets => markets.flat().map(market => this.marketToCoin(market))));
+        return forkJoin(
+            pages.map((page) =>
+                this.http.get<CoinGeckoMarketDto[]>(`${this.apiUrl}/coins/markets`, {
+                    params: this.authParams()
+                        .set('vs_currency', 'usd')
+                        .set('order', 'market_cap_desc')
+                        .set('per_page', MARKETS_PAGE_SIZE)
+                        .set('page', page),
+                }),
+            ),
+        ).pipe(map((markets) => markets.flat().map((market) => this.marketToCoin(market))));
     }
 
     getAsset(id: string): Observable<Coin> {
         return this.http
             .get<CoinGeckoCoinResponse>(`${this.apiUrl}/coins/${id}`, {
-                headers: this.authHeaders(),
-                params: new HttpParams()
+                params: this.authParams()
                     .set('localization', 'false')
                     .set('tickers', 'false')
                     .set('market_data', 'true')
@@ -49,7 +49,7 @@ export class CoinGeckoProvider implements CoinsDataProvider {
                     .set('developer_data', 'false')
                     .set('sparkline', 'false'),
             })
-            .pipe(map(dto => this.detailToCoin(dto)));
+            .pipe(map((dto) => this.detailToCoin(dto)));
     }
 
     getHistory(id: string, interval: string, days: number): Observable<ChartPoint[]> {
@@ -57,16 +57,18 @@ export class CoinGeckoProvider implements CoinsDataProvider {
         // CoinCap-specific `interval` is not mapped.
         return this.http
             .get<CoinGeckoMarketChartResponse>(`${this.apiUrl}/coins/${id}/market_chart`, {
-                headers: this.authHeaders(),
-                params: new HttpParams()
-                    .set('vs_currency', 'usd')
-                    .set('days', days),
+                params: this.authParams().set('vs_currency', 'usd').set('days', days),
             })
             .pipe(map(({ prices }) => prices.map(([time, price]) => toChartPoint(time, price))));
     }
 
-    private authHeaders(): HttpHeaders {
-        return new HttpHeaders().set('x-cg-demo-api-key', environment.coingecko.apiKey);
+    /**
+     * The demo key as a query parameter (officially supported alongside the
+     * header) keeps requests CORS-simple: no custom header means the browser
+     * sends no preflight, halving the request count against the rate limit.
+     */
+    private authParams(): HttpParams {
+        return new HttpParams().set('x_cg_demo_api_key', environment.coingecko.apiKey);
     }
 
     private marketToCoin(market: CoinGeckoMarketDto): Coin {

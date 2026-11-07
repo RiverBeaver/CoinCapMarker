@@ -99,11 +99,13 @@ describe('ChartComponent', () => {
         expect(getHistory).toHaveBeenLastCalledWith('bitcoin', 'h1', 30);
     });
 
-    it('renders the chart only after points arrive', () => {
+    it('does not render the chart before points arrive', () => {
         getHistory.mockReturnValue(new Subject<number[][]>());
         create();
         expect(fixture.nativeElement.querySelector('highcharts-chart')).toBeNull();
+    });
 
+    it('renders the chart after points arrive', () => {
         getHistory.mockReturnValue(of([[1730000000000, 50000]]));
         create();
         expect(fixture.nativeElement.querySelector('highcharts-chart')).not.toBeNull();
