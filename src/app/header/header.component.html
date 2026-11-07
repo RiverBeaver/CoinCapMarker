@@ -2,7 +2,7 @@
 <header>
     <div class="top3">
         @for (coin of topCoins; track coin) {
-            <div (click)="moreDetailed(coin.id)">
+            <div (click)="moreDetailed(coin)">
                 <img src="{{ coin.logo }}" alt="" />
                 <span>{{ coin.priceUsd | currency: 'CAD' : 'symbol-narrow' : '.2-2' }}</span>
             </div>

@@ -9,6 +9,7 @@ import { COINS_DATA_PROVIDER } from '../core/data-provider/data-provider.token';
 import { Coin } from '../entities/classes/coin.class';
 import { CoinsInBriefcaseService } from '../entities/services/coins-in-briefcase.service';
 import { CoinsService } from '../entities/services/coins.service';
+import { SelectedCoinService } from '../entities/services/selected-coin.service';
 import { CoinSearchComponent } from './coin-search/coin-search.component';
 import { CoinsTableComponent } from './coins-table.component';
 
@@ -121,12 +122,13 @@ describe('CoinsTableComponent', () => {
         expect(element.querySelectorAll('tbody tr').length).toBe(2);
     });
 
-    it('opens the coin page when a row is clicked', () => {
+    it('stores the clicked coin and opens its page', () => {
         getAssets.mockReturnValue(of([makeCoin('bitcoin', '50000')]));
         create();
         const navigate = vi.spyOn(TestBed.inject(Router), 'navigate');
         fixture.nativeElement.querySelector('tbody tr').dispatchEvent(new Event('click'));
         expect(navigate).toHaveBeenCalledWith(['/coins/bitcoin']);
+        expect(TestBed.inject(SelectedCoinService).selectedCoin()?.id).toBe('bitcoin');
     });
 
     it('opens the add-coin modal from the row button', () => {

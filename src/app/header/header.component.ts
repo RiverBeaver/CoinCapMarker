@@ -6,6 +6,7 @@ import type { CoinInBriefcase } from '../entities/classes/coin-in-briefcase.clas
 import type { Coin } from '../entities/classes/coin.class';
 import { CoinsInBriefcaseService } from '../entities/services/coins-in-briefcase.service';
 import { CoinsService } from '../entities/services/coins.service';
+import { SelectedCoinService } from '../entities/services/selected-coin.service';
 import { ModalWindowsComponent } from '../modal-windows/modal-windows.component';
 
 @Component({
@@ -16,6 +17,7 @@ import { ModalWindowsComponent } from '../modal-windows/modal-windows.component'
 })
 export class HeaderComponent implements OnInit, OnDestroy {
     private readonly coinsService = inject(CoinsService);
+    private readonly selectedCoinService = inject(SelectedCoinService);
     private readonly router = inject(Router);
     private readonly coinsInBriefcaseService = inject(CoinsInBriefcaseService);
 
@@ -48,8 +50,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         });
     }
 
-    moreDetailed(id: string) {
-        this.router.navigate([`/coins/${id}`]);
+    moreDetailed(coin: Coin) {
+        this.selectedCoinService.select(coin);
+        this.router.navigate([`/coins/${coin.id}`]);
     }
 
     openBriefcase() {

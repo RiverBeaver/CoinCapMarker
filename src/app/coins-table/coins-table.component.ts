@@ -8,6 +8,7 @@ import { debounceTime, fromEvent } from 'rxjs';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CoinsService } from '../entities/services/coins.service';
+import { SelectedCoinService } from '../entities/services/selected-coin.service';
 import type { Coin } from '../entities/classes/coin.class';
 import { ErrorComponent } from '../error/error.component';
 import { ModalWindowsComponent } from '../modal-windows/modal-windows.component';
@@ -31,6 +32,7 @@ import { WINDOW } from '../core/tokens/window.token';
 })
 export class CoinsTableComponent implements OnInit {
     private readonly coinsService = inject(CoinsService);
+    private readonly selectedCoinService = inject(SelectedCoinService);
     private readonly router = inject(Router);
     private readonly document = inject<Document>(DOCUMENT);
     private readonly window = inject(WINDOW);
@@ -92,8 +94,9 @@ export class CoinsTableComponent implements OnInit {
         }
     }
 
-    protected moreDetailed(id: string) {
-        this.router.navigate([`/coins/${id}`]);
+    protected moreDetailed(coin: Coin) {
+        this.selectedCoinService.select(coin);
+        this.router.navigate([`/coins/${coin.id}`]);
     }
 
     protected coinsChange(event: { coins: Coin[]; value: string }) {

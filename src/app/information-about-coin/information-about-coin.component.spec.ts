@@ -8,6 +8,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { COINS_DATA_PROVIDER } from '../core/data-provider/data-provider.token';
 import { Coin } from '../entities/classes/coin.class';
 import { CoinInfoService } from '../entities/services/coin-info.service';
+import { SelectedCoinService } from '../entities/services/selected-coin.service';
 import { ChartComponent } from './chart/chart.component';
 import { InformationAboutCoinComponent } from './information-about-coin.component';
 
@@ -38,7 +39,7 @@ describe('InformationAboutCoinComponent', () => {
     let fixture: ComponentFixture<InformationAboutCoinComponent>;
     let getAsset: ReturnType<typeof vi.fn>;
 
-    function create(id: string) {
+    function create(id: string, prepare?: () => void) {
         TestBed.configureTestingModule({
             imports: [InformationAboutCoinComponent],
             providers: [
@@ -51,6 +52,7 @@ describe('InformationAboutCoinComponent', () => {
             remove: { imports: [ChartComponent] },
             add: { imports: [ChartStubComponent] },
         });
+        prepare?.();
         fixture = TestBed.createComponent(InformationAboutCoinComponent);
         fixture.detectChanges();
         return fixture;
@@ -65,6 +67,29 @@ describe('InformationAboutCoinComponent', () => {
         create('ethereum');
         expect(fixture.componentInstance).toBeTruthy();
         expect(getAsset).toHaveBeenCalledWith('ethereum');
+    });
+
+    it('renders the stored coin without a network request', () => {
+        getAsset.mockReturnValue(of(makeCoin()));
+        const element = create('bitcoin', () => {
+            TestBed.inject(SelectedCoinService).select(makeCoin());
+        }).nativeElement;
+        expect(getAsset).not.toHaveBeenCalled();
+        expect(element.querySelector('.name')?.textContent?.trim()).toBe('Bitcoin');
+    });
+
+    it('fetches when the stored coin does not match the route id', () => {
+        getAsset.mockReturnValue(of(makeCoin()));
+        create('ethereum', () => {
+            TestBed.inject(SelectedCoinService).select(makeCoin());
+        });
+        expect(getAsset).toHaveBeenCalledWith('ethereum');
+    });
+
+    it('stores the fetched coin for later visits', () => {
+        getAsset.mockReturnValue(of(makeCoin()));
+        create('bitcoin');
+        expect(TestBed.inject(SelectedCoinService).selectedCoin()?.id).toBe('bitcoin');
     });
 
     it('renders the coin details', () => {

@@ -46,7 +46,7 @@
                         | paginate: { itemsPerPage: tableSize, currentPage: page, totalItems: count };
                     track coin.id
                 ) {
-                    <tr (click)="moreDetailed(coin.id)">
+                    <tr (click)="moreDetailed(coin)">
                         <td class="logo-and-name">
                             <img src="{{ coin.logo }}" alt="" />
                             <div class="name-and-symbol">
